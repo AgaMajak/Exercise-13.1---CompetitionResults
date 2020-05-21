@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class PlayerFileWriter {
+    private static final String STOP = "stop";
 
     private static void writePlayerListToFile(List<Player> players, File file) {
         FileCreator.createFile(file);
@@ -35,7 +37,7 @@ public class PlayerFileWriter {
         while (i < 1) {
             System.out.println("Podaj wynik kolejnego gracza (lub stop):");
             String line = scan.nextLine();
-            if (line.equals("stop") || line.equals("STOP") || line.equals("Stop")) {
+            if (line.equalsIgnoreCase(STOP)) {
                 System.out.println("Dane posortowano i zapisano do pliku stats.csv.");
                 i++;
                 break;
@@ -47,7 +49,7 @@ public class PlayerFileWriter {
             int parseResult = Integer.parseInt(result);
             players.add(new Player(firstName, lastName, parseResult));
         }
-        PlayerSort.sortPlayerList(players);
+        Collections.sort(players);
         String fileName = "stats.csv";
         File file = new File(fileName);
 
